@@ -32,6 +32,8 @@ app.use('/api/servicios', serviciosRoutes);
 app.use('/api/paquetes', paquetesRoutes);
 app.use('/api/pedidos', pedidosRoutes);
 app.use('/api/carrito', carritoRoutes);
+app.use('/api/servicios', require('./routes/servicios'));
+app.use('/api/paquetes', require('./routes/paquetes'));
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {

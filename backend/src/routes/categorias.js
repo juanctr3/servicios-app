@@ -4,14 +4,27 @@ const verificarToken = require('../middleware/auth');
 
 const router = express.Router();
 
-// Rutas públicas
+// ===== RUTAS PROTEGIDAS (ADMIN) - VAN PRIMERO =====
+// Crear categoría
+router.post('/', verificarToken, CategoriaController.crear);
+
+// Actualizar categoría por ID
+router.put('/:id', verificarToken, CategoriaController.actualizar);
+
+// Eliminar categoría por ID
+router.delete('/:id', verificarToken, CategoriaController.eliminar);
+
+// ===== RUTAS PÚBLICAS - VAN DESPUÉS =====
+// Obtener todas las categorías
 router.get('/', CategoriaController.obtenerTodas);
-router.get('/:id', CategoriaController.obtenerPorId);
+
+// Obtener por slug (DEBE IR ANTES DE /:id para evitar conflicto)
 router.get('/slug/:slug', CategoriaController.obtenerPorSlug);
 
-// Rutas protegidas (solo admin)
-router.post('/', verificarToken, CategoriaController.crear);
-router.put('/:id', verificarToken, CategoriaController.actualizar);
-router.delete('/:id', verificarToken, CategoriaController.eliminar);
+// Contar servicios de una categoría
+router.get('/:id/servicios/count', CategoriaController.contarServicios);
+
+// Obtener categoría por ID
+router.get('/:id', CategoriaController.obtenerPorId);
 
 module.exports = router;
